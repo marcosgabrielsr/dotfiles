@@ -1,0 +1,9 @@
+configuration {
+	modi: "drun,run";
+	drun-display-format: "{name}";
+	show-icons: true;
+	icon-theme: "Papirus";
+}
+
+@import "~/.config/rofi/colors/monokai.rasi"
+@import "~/.config/rofi/font/fonts.rasi"

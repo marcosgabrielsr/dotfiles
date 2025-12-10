@@ -1,0 +1,80 @@
+/* Tema de DEBUG: itens ABSURDAMENTE altos */
+
+* {
+    font: "JetBrainsMono Nerd Font 18";
+
+    bg:   #11111b;
+    fg:   #cdd6f4;
+    acc:  #89b4fa;
+}
+
+window {
+    location: center;
+    anchor: center;
+
+    width: 40%;
+    height: 60%;
+
+    padding: 20px;
+    margin: 0px;
+
+    border: 2px solid;
+    border-radius: 12px;
+    border-color: @acc;
+
+    background-color: @bg;
+}
+
+mainbox {
+    children: [ "listview" ];
+    spacing: 10px;
+    padding: 0px;
+    background-color: transparent;
+}
+
+/* LISTA */
+
+listview {
+    enabled: true;
+
+    lines: 3;             /* só 3 linhas pra cada uma ter espaço */
+    columns: 1;
+
+    fixed-height: true;
+    row-height: 100px;    /* altura MÍNIMA de cada item */
+
+    spacing: 12px;        /* espaço ENTRE os itens */
+    scrollbar: false;
+
+    background-color: transparent;
+    text-color: @fg;
+}
+
+/* CAIXA DE CADA ITEM */
+
+element {
+    padding: 24px;        /* padding interno ENORME */
+
+    background-color: #1e1e2e;
+    text-color: @fg;
+
+    border: 2px solid;
+    border-radius: 16px;
+    border-color: @acc;
+}
+
+element selected {
+    background-color: @acc;
+    text-color: @bg;
+}
+
+/* TEXTO DO ITEM */
+
+element-text {
+    background-color: transparent;
+    text-color: inherit;
+    highlight: inherit;
+
+    horizontal-align: 0.0;   /* esquerda */
+    vertical-align: 0.5;     /* centralizado verticalmente */
+}

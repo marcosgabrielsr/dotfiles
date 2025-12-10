@@ -1,0 +1,106 @@
+@import "base.rasi"
+
+configuration {
+	eh: 2;
+}
+
+window {
+	transparency: "real";
+	width: 35%;
+	location: northwest;
+	anchor: center;
+
+	enabled: true;
+	margin: 0px;
+	padding: 0px;
+	border: 2px solid;
+	border-color: @border;
+	border-radius: 10px;
+	border-color: @border;
+	background-color: @background;
+}
+
+mainbox {
+	enabled: true;
+	spacing: 10px;
+	margin: 0px;
+	padding: 0px;
+	background-color: transparent;
+	children: ["message", "listview"];
+}
+
+prompt {
+	enabled: true;
+	background-color: inherit;
+	text-color: inherit;
+}
+
+listview {
+	enabled: true;
+	columns: 1;
+	lines: 10;
+	cycle: true;
+	dynamic: true;
+	scrollbar: false;
+	layout: vertical;
+	reverse: false;
+	fixed-height: false;
+	fixed-columns: true;
+	spacing: 5px;
+	background-color: transparent;
+	text-color: @foreground;
+	cursor: "default";
+	border: 0;
+}
+
+scrollbar {
+	handle-width: 5px;
+	handle-color: @selected;
+	border-radius: 10px;
+	background-color: @background-alt;
+}
+
+element normal.normal,
+element alternate.normal {
+	background-color: @background;
+	text-color: @foreground;
+}
+
+element normal.urgent,
+element alternate.urgent,
+element selected.active {
+	background-color: @background;
+	text-color: @foreground;
+	border: 2px;
+	border-radius: 10px;
+	border-color: @selected;
+}
+
+element normal.active,
+element alternate.active,
+element selected.urgent {
+	background-color: @background;
+	text-color: @foreground;
+	border: 2px;
+	border-color: @urgent;
+}
+
+element selected.normal {
+	background-color: @selected;
+	text-color: @foreground;
+	border-radius: 10px;
+}
+
+element-icon {
+	enabled: false;
+}
+
+element-text {
+	background-color: transparent;
+	text-color: inherit;
+	highlight: inherit;
+	font: "JetBrainsMono Nerd Font Propo 11";
+	cursor: inherit;
+	vertical-align: 0.5;
+	horizontal-align: 0.0;
+}

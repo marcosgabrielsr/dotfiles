@@ -1,0 +1,10 @@
+/* Simple Monokai Theme */
+
+* {
+    background:		#272822;
+    background-alt:	#3D3D3D;
+    border:		#171616;
+    foreground:		#F8F8F2;
+    selected:		#F92672;
+    urgent:		#F4BF75;
+}
