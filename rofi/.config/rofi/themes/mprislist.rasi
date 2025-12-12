@@ -24,11 +24,27 @@ window {
 
 mainbox {
 	enabled: true;
-	spacing: 10px;
+	spacing: 4px;
 	margin: 0px;
-	padding: 10px;
+	padding: 8px;
 	background-color: transparent;
 	children: ["message", "listview"];
+}
+
+message {
+	enabled: true;
+	background-color: transparent;
+	text-color: @foreground;
+	children: ["textbox"];
+}
+
+textbox {
+	enabled: true;
+	margin: 0px;
+	padding: 0px;
+	background-color: inherit;
+	text-color: inherit;
+	padding: 0px 8px;
 }
 
 listview {
