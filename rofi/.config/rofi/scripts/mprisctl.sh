@@ -29,5 +29,5 @@ while IFS= read -r p; do
 
 done <<< "$players"
 
-choice=$(printf "%b" "$menu" | rofi -dmenu -sep "$sep" -p "Players" -i -theme "$player_list")
+choice=$(printf "%b" "$menu" | rofi -dmenu -sep "$sep" -mesg "Players" -i -theme "$player_list")
 [ -z "$choice" ] && exit 0
