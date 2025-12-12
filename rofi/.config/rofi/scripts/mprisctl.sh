@@ -21,9 +21,9 @@ while IFS= read -r p; do
         entry="$line1\n$line2"
     
         if [ "$status" = "Paused" ]; then
-            menu+=" $entry$sep"
+            menu+="  $entry$sep"
         elif [ "$status" = "Playing" ]; then
-            menu+=" $entry$sep"
+            menu+="  $entry$sep"
         fi
     fi
 
