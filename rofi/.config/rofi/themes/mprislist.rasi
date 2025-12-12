@@ -5,18 +5,20 @@ configuration {
 }
 
 window {
+	enabled: true;
 	transparency: "real";
-	width: 35%;
 	location: northwest;
 	anchor: center;
 
-	enabled: true;
-	margin: 0px;
+	width: 20%;
+	margin: 0px 0px 0px 10px;
 	padding: 0px;
+
 	border: 2px solid;
 	border-color: @border;
-	border-radius: 10px;
+	border-radius: 18px;
 	border-color: @border;
+
 	background-color: @background;
 }
 
@@ -24,15 +26,40 @@ mainbox {
 	enabled: true;
 	spacing: 10px;
 	margin: 0px;
-	padding: 0px;
+	padding: 10px;
 	background-color: transparent;
-	children: ["message", "listview"];
+	children: [ "inputbar", "message", "listview"];
+}
+
+inputbar {
+	enabled: false;
+	spacing: 10px;
+	margin: 0px;
+	padding: 8px;
+	border: 2px;
+	border-radius: 10px;
+	border-color: @border;
+	background-color: @background-alt;
+	text-color: @foreground;
 }
 
 prompt {
 	enabled: true;
 	background-color: inherit;
 	text-color: inherit;
+}
+
+textbox-prompt-colon {
+	enabled: true;
+	padding: 0px;
+	expand: false;
+	str: "Players";
+	background-color: inherit;
+	text-color: inherit;
+}
+
+entry {
+	enabled: false;
 }
 
 listview {
@@ -44,20 +71,16 @@ listview {
 	scrollbar: false;
 	layout: vertical;
 	reverse: false;
+
 	fixed-height: false;
 	fixed-columns: true;
+
 	spacing: 5px;
 	background-color: transparent;
 	text-color: @foreground;
 	cursor: "default";
+	margin: 5px;
 	border: 0;
-}
-
-scrollbar {
-	handle-width: 5px;
-	handle-color: @selected;
-	border-radius: 10px;
-	background-color: @background-alt;
 }
 
 element normal.normal,
@@ -102,5 +125,5 @@ element-text {
 	font: "JetBrainsMono Nerd Font Propo 11";
 	cursor: inherit;
 	vertical-align: 0.5;
-	horizontal-align: 0.0;
+	horizontal-align: 0.1;
 }
