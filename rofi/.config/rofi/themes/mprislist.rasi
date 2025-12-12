@@ -28,38 +28,7 @@ mainbox {
 	margin: 0px;
 	padding: 10px;
 	background-color: transparent;
-	children: [ "inputbar", "message", "listview"];
-}
-
-inputbar {
-	enabled: false;
-	spacing: 10px;
-	margin: 0px;
-	padding: 8px;
-	border: 2px;
-	border-radius: 10px;
-	border-color: @border;
-	background-color: @background-alt;
-	text-color: @foreground;
-}
-
-prompt {
-	enabled: true;
-	background-color: inherit;
-	text-color: inherit;
-}
-
-textbox-prompt-colon {
-	enabled: true;
-	padding: 0px;
-	expand: false;
-	str: "Players";
-	background-color: inherit;
-	text-color: inherit;
-}
-
-entry {
-	enabled: false;
+	children: ["message", "listview"];
 }
 
 listview {
@@ -83,6 +52,11 @@ listview {
 	border: 0;
 }
 
+element {
+	orientation: horizontal;
+	children: ["element-text"];
+}
+
 element normal.normal,
 element alternate.normal {
 	background-color: @background;
@@ -93,10 +67,10 @@ element normal.urgent,
 element alternate.urgent,
 element selected.active {
 	background-color: @background;
+	border-color: @selected;
 	text-color: @foreground;
 	border: 2px;
 	border-radius: 10px;
-	border-color: @selected;
 }
 
 element normal.active,
@@ -104,18 +78,14 @@ element alternate.active,
 element selected.urgent {
 	background-color: @background;
 	text-color: @foreground;
-	border: 2px;
 	border-color: @urgent;
+	border: 2px;
 }
 
 element selected.normal {
 	background-color: @selected;
 	text-color: @foreground;
 	border-radius: 10px;
-}
-
-element-icon {
-	enabled: false;
 }
 
 element-text {
@@ -125,5 +95,6 @@ element-text {
 	font: "JetBrainsMono Nerd Font Propo 11";
 	cursor: inherit;
 	vertical-align: 0.5;
-	horizontal-align: 0.1;
+	horizontal-align: 0.0;
+	padding: 0px 8px 0px 8px;
 }
