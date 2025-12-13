@@ -1,33 +1,15 @@
 #!/bin/bash
-player_list="$HOME/.config/rofi/themes/mprislist.rasi"
-sep=$'\x1f'
+player_list="$HOME/.config/rofi/scripts/mprislist.sh"
+player_applet="$HOME/.config/rofi/scripts/mprisapplet.sh"
 
-players=$(playerctl -l 2>/dev/null)
-[ -z "$players" ] && notify-send "Rofi Player" "No players found" && exit 0
+# Get the selected player id
+selected_player=$("$player_list")
+echo -e "selected player: $selected_player"
 
-menu=""
-while IFS= read -r p; do
-    status=$(playerctl -p "$p" status 2>/dev/null)
-    
-    if [ "$status" != "Stopped" ]; then
-        title=$(playerctl -p "$p" metadata xesam:title 2>/dev/null)
-        artist=$(playerctl -p "$p" metadata xesam:artist 2>/dev/null)
+if [ -z "$selected_player" ]; then
+    echo "Player not found"
+    exit 0
+fi
 
-        [ -z "$title" ] && title="(no title)"
-        [ -z "$artist" ] && artist="(unknown)"
-
-        line1="$p | $artist"
-        line2="$title"
-        entry="$line1\n$line2"
-    
-        if [ "$status" = "Paused" ]; then
-            menu+="  $entry$sep"
-        elif [ "$status" = "Playing" ]; then
-            menu+="  $entry$sep"
-        fi
-    fi
-
-done <<< "$players"
-
-choice=$(printf "%b" "$menu" | rofi -dmenu -sep "$sep" -mesg "Players" -i -theme "$player_list")
-[ -z "$choice" ] && exit 0
+# Call the applet to the selected player
+"$player_applet" "$selected_player"
