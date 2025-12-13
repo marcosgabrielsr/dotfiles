@@ -26,7 +26,7 @@ mainbox {
 	enabled: true;
 	spacing: 4px;
 	margin: 0px;
-	padding: 8px;
+	padding: 4px 8px 8px 8px;
 	background-color: transparent;
 	children: ["message", "listview"];
 }
