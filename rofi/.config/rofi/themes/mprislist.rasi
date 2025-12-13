@@ -41,16 +41,16 @@ message {
 textbox {
 	enabled: true;
 	margin: 0px;
-	padding: 0px;
+	padding: 0px 14px;
 	background-color: inherit;
 	text-color: inherit;
-	padding: 0px 8px;
+	font: "JetBrainsMono Nerd Font Propo 12";
 }
 
 listview {
 	enabled: true;
 	columns: 1;
-	lines: 10;
+	lines: 5;
 	cycle: true;
 	dynamic: true;
 	scrollbar: false;
@@ -64,13 +64,24 @@ listview {
 	background-color: transparent;
 	text-color: @foreground;
 	cursor: "default";
-	margin: 5px;
-	border: 0;
+	margin: 0px;
+	border: 0px;
 }
 
 element {
 	orientation: horizontal;
 	children: ["element-text"];
+}
+
+element-text {
+	background-color: transparent;
+	text-color: inherit;
+	highlight: inherit;
+	font: "JetBrainsMono Nerd Font Propo 10";
+	cursor: inherit;
+	vertical-align: 0.5;
+	horizontal-align: 0.0;
+	padding: 0px 8px 0px 8px;
 }
 
 element normal.normal,
@@ -102,15 +113,4 @@ element selected.normal {
 	background-color: @selected;
 	text-color: @foreground;
 	border-radius: 10px;
-}
-
-element-text {
-	background-color: transparent;
-	text-color: inherit;
-	highlight: inherit;
-	font: "JetBrainsMono Nerd Font Propo 11";
-	cursor: inherit;
-	vertical-align: 0.5;
-	horizontal-align: 0.0;
-	padding: 0px 8px 0px 8px;
 }
