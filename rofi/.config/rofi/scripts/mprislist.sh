@@ -5,8 +5,6 @@ sep=$'\x1f'
 players_raw=$(playerctl -l 2>/dev/null)
 [ -z "$players_raw" ] && notify-send "Rofi Player" "No players found" && exit 0
 
-echo "$players_raw"
-
 menu_display=""
 declare -a player_ids
 counter=0
@@ -44,3 +42,5 @@ done <<< "$players_raw"
 selected_index=$(printf "%s" "$menu_display" | rofi -dmenu -sep "$sep" -mesg "Players" -i -theme "$player_list" -format i)
 [ -z "$selected_index" ] && exit 0
 
+chosen_player="${player_ids[$selected_index]}"
+echo "$chosen_player"
