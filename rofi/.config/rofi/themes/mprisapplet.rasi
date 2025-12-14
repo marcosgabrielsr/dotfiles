@@ -45,40 +45,68 @@ textbox-msg {
 }
 
 middle-wrapper {
-    enabled:                     true;
-    orientation:                 horizontal;
-    spacing:                     20px;
-    background-color:            transparent;
-    expand:                      true; 
-    children:                    ["album-art", "custom-text-box"];
+    enabled: true;
+    orientation: horizontal;
+    spacing: 20px;
+    background-color: transparent;
+    expand: true; 
+    children: ["album-art", "info-wrapper"];
 }
 
 album-art {
-    enabled:                     true;
-    width:                       105px;
-    background-color:            @background-alt;
-    background-image:            url("/home/mgs/Reps/dotfiles/rofi/.config/rofi/themes/fallback_album_art.png", height);
-    border-radius:               10px;
-    expand:                      false; 
-}
-
-custom-text-box {
     enabled: true;
-    expand: true;
-    padding: 20px;
+    width: 105px;
     background-color: @background-alt;
+    background-image: url("/home/mgs/Reps/dotfiles/rofi/.config/rofi/themes/fallback_album_art.png", height);
     border-radius: 10px;
-    children: ["textbox-custom"];
+    expand: false;
 }
 
-textbox-custom {
+info-wrapper {
+    enabled: true;
+    orientation: vertical;
+    spacing: 0px;
+    background-color: transparent;
+    expand: true;
+    children: ["title-text-box","song-text-box"];
+}
+
+title-text-box {
+    enabled: true;
+    expand: false;
+    padding: 5px;
+    background-color: @background-alt;
+    border-radius: 10px 10px 0px 0px;
+    children: ["textbox-title"];
+}
+
+textbox-title {
     background-color: transparent;
     text-color: @foreground;
     vertical-align: 0.5;
     horizontal-align: 0.5;
     markup: true;
     font: "JetBrainsMono Nerd Font Propo 12";
-    str: "Loading...";
+    str: "Loading Title...";
+}
+
+song-text-box {
+    enabled: true;
+    expand: true;
+    padding: 10px;
+    background-color: @background-alt;
+    border-radius: 0px 0px 10px 10px;
+    children: ["textbox-song"];
+}
+
+textbox-song {
+    background-color: transparent;
+    text-color: @foreground;
+    vertical-align: 0.5;
+    horizontal-align: 0.5;
+    markup: true;
+    font: "JetBrainsMono Nerd Font Propo 12";
+    str: "Loading Info...";
 }
 
 listview {
