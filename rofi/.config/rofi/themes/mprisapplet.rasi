@@ -27,21 +27,21 @@ mainbox {
 }
 
 top-message {
-    enabled:                     true;
-    padding:                     0px;
-    background-color:            @background;
-    children:                    [ "textbox-msg" ];
-    expand:                      false;
+    enabled: true;
+    padding: 0px;
+    background-color: @background;
+    children: [ "textbox-msg" ];
+    expand: false;
 }
 
 textbox-msg {
     expand: true;
-    background-color:            transparent;
-    text-color:                  @foreground;
-    horizontal-align:            0.5;
-    vertical-align:              0.5;
-    str:                         "󰎆 Now Playing"; 
-    font:                        "JetBrainsMono Nerd Font Propo 12";
+    background-color: transparent;
+    text-color: @foreground;
+    horizontal-align: 0.5;
+    vertical-align: 0.5;
+    str: "󰎆 Now Playing";
+    font: "JetBrainsMono Nerd Font Propo 12";
 }
 
 middle-wrapper {
