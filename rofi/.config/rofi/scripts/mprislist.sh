@@ -39,7 +39,7 @@ while IFS= read -r p_id; do
 
 done <<< "$players_raw"
 
-selected_index=$(printf "%s" "$menu_display" | rofi -dmenu -sep "$sep" -mesg "Players" -i -theme "$player_list" -format i)
+selected_index=$(printf "%s" "$menu_display" | rofi -dmenu -sep "$sep" -i -theme "$player_list" -format i)
 [ -z "$selected_index" ] && exit 0
 
 chosen_player="${player_ids[$selected_index]}"
