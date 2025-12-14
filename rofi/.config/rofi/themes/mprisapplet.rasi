@@ -57,7 +57,7 @@ album-art {
     enabled: true;
     width: 105px;
     background-color: @background-alt;
-    background-image: url("/home/mgs/Reps/dotfiles/rofi/.config/rofi/themes/fallback_album_art.png", height);
+    background-image: url("/home/mgs/Reps/dotfiles/rofi/.config/rofi/images/fallback_album_art.png", height);
     border-radius: 10px;
     expand: false;
 }
