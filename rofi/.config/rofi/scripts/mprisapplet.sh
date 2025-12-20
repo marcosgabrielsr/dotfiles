@@ -28,7 +28,12 @@ next=""
 display_title="<span weight='light' size='small' alpha='40%'>${selected_player} ${status}</span>"
 display_song="<span size='85%'>${final_title}</span>\n<span size='small' style='italic' alpha='60%'>${artist}</span>"
 
-selected_option=$(echo -e "$prev\n$toggle\n$next" | rofi -dmenu -theme "$player_applet" -theme-str "textbox-title { str: \"$display_title\";}" -theme-str "textbox-song { str: \"$display_song\";}" -select "$toggle")
+selected_option=$(echo -e "$prev\n$toggle\n$next" | rofi \
+    -dmenu \
+    -theme "$player_applet" \
+    -theme-str "textbox-title { str: \"$display_title\";}" \
+    -theme-str "textbox-song { str: \"$display_song\";}" \
+    -select "$toggle")
 [ -z "$selected_option"] && exit 0
 
 case "$selected_option" in
