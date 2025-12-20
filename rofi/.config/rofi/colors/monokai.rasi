@@ -6,5 +6,6 @@
     border:		#171616;
     foreground:		#F8F8F2;
     selected:		#F92672;
+    success:   #A6E22E;
     urgent:		#F4BF75;
 }
