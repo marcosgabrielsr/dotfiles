@@ -22,10 +22,17 @@ get_current_wifi_conn() {
 }
 
 get_ssid_from_network_format() {
-    network=$1
-    raw_ssid="${network:0:$2}"
-    real_ssid="$(echo "$raw_ssid" | sed 's/ *$//')"
+    local network=$1
+    local raw_ssid="${network:0:$2}"
+    local real_ssid="$(echo "$raw_ssid" | sed 's/ *$//')"
     echo "$real_ssid"
+}
+
+get_security_from_network_format() {
+    local network=$1
+    local raw_sec="${network:$2}"
+    local real_sec="$(echo "$raw_sec" | sed 's/ *$//')"
+    echo "$real_sec"
 }
 
 set_status_msg() {
@@ -57,8 +64,12 @@ set_toggle_option() {
 }
 
 # Variables Attribution
-layout="%-20s %-6s %-6s %-8s\n"
 ssid_width=20
+signal_width=6
+bars_width=6
+security_width=8
+layout="%-${ssid_width}s %-${signal_width}s %-${bars_width}s %-${security_width}s\n"
+
 status="$(nmcli radio wifi)"
 current_network="$(get_current_wifi_conn)"
 nmcli_applet="$HOME/.config/rofi/themes/nmcliapplet.rasi"
@@ -100,7 +111,10 @@ case "$selected_option" in
         )"
 
         ssid="$(get_ssid_from_network_format "$selected_network" "$ssid_width")"
+        sec_pos=$(($ssid_width + 1 + $signal_width + 1 + bars_width + 1))
+        sec_type="$(get_security_from_network_format "$selected_network" "$sec_pos")"
         echo "selected ssid: $ssid"
+        echo "security type: $sec_type"
         ;;
     
     " Refresh")
