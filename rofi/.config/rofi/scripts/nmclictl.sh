@@ -63,7 +63,7 @@ selected_option="$(printf "%s\n" "${options[@]}" | rofi \
     -theme "$nmcli_applet" \
     -theme-str "$top_msg_config"
 )"
-[ -z "$selected_option"] && exit 0
+[ -z "$selected_option" ] && exit 0
 
 echo "$selected_option"
 
