@@ -50,6 +50,7 @@ current_network="$(get_current_wifi_conn)"
 nmcli_applet="$HOME/.config/rofi/themes/nmcliapplet.rasi"
 menu_wifi_list="$HOME/.config/rofi/themes/wifilist.rasi"
 headers=$(printf "$layout" "SSID" "SIGNAL" "BARS" "SECURITY")
+column_headers_config="textbox-column-headers { str: \"$headers\"; }"
 top_msg_config="$(set_status_msg "$current_network" "$status")"
 options=(
     "$(set_toggle_option "$status")"
@@ -61,7 +62,7 @@ options=(
 selected_option="$(printf "%s\n" "${options[@]}" | rofi \
     -dmenu \
     -theme "$nmcli_applet" \
-    -theme-str "$top_msg_config"
+    -theme-str "$top_msg_config" \
 )"
 [ -z "$selected_option" ] && exit 0
 
@@ -80,7 +81,8 @@ case "$selected_option" in
         networks="$(get_formatted_networks_list "$layout")"
         selected_network="$(echo "$networks" | rofi \
             -dmenu \
-            -theme "$menu_wifi_list"
+            -theme "$menu_wifi_list" \
+            -theme-str "$column_headers_config"
         )"
         ;;
     
