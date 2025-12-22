@@ -1,0 +1,99 @@
+@import "base.rasi"
+
+window {
+    enabled: true;
+    transparency: "real";
+    location: northeast;
+    anchor: northeast;
+
+    width: 15%;
+    margin: 0px 10px 0px 0px;
+    padding: 10px;
+
+    cursor: "default";
+    border: 2px solid;
+    border-radius: 10px;
+    background-color: @background;
+}
+
+mainbox {
+    enabled: true;
+    spacing: 10px;
+    background-color: transparent;
+    orientation: vertical;
+    children: ["top-message","status-message","listview"];
+}
+
+top-message {
+    enabled: true;
+    padding: 0px;
+    background-color: @background;
+    children: ["textbox-top-msg"];
+    expand: false;
+}
+
+textbox-top-msg {
+    enabled: true;
+    background-color: transparent;
+    text-color: @foreground;
+    horizontal-align: 0.5;
+    vertical-align: 0.5;
+    str: " Wifi";
+    font: "JetBrainsMono Nerd Font Propo 12";
+}
+
+status-message {
+    enabled: true;
+    padding: 0px;
+    background-color: @background;
+    children: ["textbox-status-msg"];
+    expand: false;
+}
+
+textbox-status-msg {
+    enabled: true;
+    background-color: @background-alt;
+    text-color: @foreground;
+    horizontal-align: 0.5;
+    vertical-align: 0.5;
+    border-radius: 10px;
+    str: "Loading...";
+    font: "JetBrainsMono Nerd Font Propo 12";
+}
+
+listview {
+    enabled: true;
+    columns: 1;
+    lines: 4;
+    dynamic: false;
+    reverse: false;
+    spacing: 5px;
+    background-color: transparent;
+    cursor: "default";
+    expand: false;
+}
+
+element {
+    enabled: true;
+    padding: 8px;
+    border-radius: 10px;
+    cursor: "default";
+    background-color: @background-alt;
+    text-color: @foreground;
+    orientation: horizontal;
+    children: ["element-text"];
+}
+
+element.selected {
+    background-color: @selected;
+    text-color: @foreground;
+}
+
+element-text {
+    background-color: transparent;
+    text-color: inherit;
+    cursor: inherit;
+    vertical-align: 0.5;
+    horizontal-align: 0.5;
+    font: "JetBrainsMono Nerd Font Propo 10";
+}
