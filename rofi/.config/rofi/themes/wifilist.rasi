@@ -1,0 +1,142 @@
+@import "base.rasi"
+
+window {
+    enabled: true;
+    transparency: "real";
+    location: northeast;
+    anchor: northeast;
+
+    width: 25%;
+    margin: 0px 10px 0px 0px;
+    padding: 10px;
+
+    cursor: "default";
+    border: 2px solid;
+    border-radius: 10px;
+    background-color: @background;
+}
+
+mainbox {
+    enabled: true;
+    spacing: 10px;
+    background-color: transparent;
+    orientation: vertical;
+    children: ["top-message","inputbar","column-headers","listview"];
+}
+
+top-message {
+    enabled: true;
+    padding: 0px;
+    background-color: @background;
+    children: ["textbox-top-msg"];
+    expand: false;
+}
+
+textbox-top-msg {
+    enabled: true;
+    background-color: transparent;
+    text-color: @foreground;
+    horizontal-align: 0.5;
+    vertical-align: 0.5;
+    str: " NetWorks";
+    font: "JetBrainsMono Nerd Font Propo 12";
+}
+
+inputbar {
+    enabled: true;
+    spacing: 10px;
+    margin: 0px;
+    padding: 8px;
+    border: 2px;
+    border-radius: 10px;
+    border-color: @border;
+    background-color: @background-alt;
+    text-color: @foreground;
+    font: "JetBrainsMono Nerd Font Propo 10";
+    children: ["textbox-prompt-colon","entry"];
+}
+
+prompt {
+    enabled: true;
+    background-color: inherit;
+    text-color: inherit;
+}
+
+textbox-prompt-colon {
+    enabled: true;
+    padding: 0px;
+    expand: false;
+    str: "";
+    font: inherit;
+    background-color: inherit;
+    text-color: inherit;
+}
+
+entry {
+    enabled: true;
+    padding: 0px;
+    background-color: inherit;
+    text-color: inherit;
+    cursor: text;
+    placeholder: "Search networks...";
+    placeholder-color: inherit;
+    font: inherit;
+}
+
+column-headers {
+    enabled: true;
+    padding: 0px;
+    background-color: @background;
+    children: ["textbox-column-headers"];
+    expand: false;
+}
+
+textbox-column-headers {
+    enabled: true;
+    background-color: @background-alt;
+    padding: 8px;
+    text-color: @foreground;
+    horizontal-align: 0.5;
+    vertical-align: 0.5;
+    border-radius: 10px;
+    str: "Loading...";
+    font: "JetBrainsMono Nerd Font Propo 10";
+}
+
+listview {
+    enabled: true;
+    columns: 1;
+    lines: 10;
+    dynamic: true;
+    reverse: false;
+    fixed-height: false;
+    spacing: 5px;
+    background-color: transparent;
+    cursor: "default";
+    expand: false;
+}
+
+element {
+    enabled: true;
+    padding: 8px;
+    border-radius: 10px;
+    cursor: "default";
+    background-color: @background-alt;
+    text-color: @foreground;
+    orientation: horizontal;
+    children: ["element-text"];
+}
+
+element.selected {
+    background-color: @selected;
+    text-color: @foreground;
+}
+
+element-text {
+    background-color: transparent;
+    text-color: inherit;
+    cursor: inherit;
+    vertical-align: 0.5;
+    horizontal-align: 0.5;
+    font: "JetBrainsMono Nerd Font Propo 10";
+}
