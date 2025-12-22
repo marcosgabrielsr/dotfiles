@@ -1,6 +1,12 @@
 #!/bin/bash
 set -u
 
+# NOTA DO QUE FALTA FAZER:
+# - PEGAR SSID DA REDE SELECIONADA UTILIZANDO TAMANHO DO FORMAT
+# - GERAR CAIXA DE TEXTO PARA INSERIR A REDE E OPÇÃO DE ACESSAR NMTUI
+# - GERAR AVISO PARA ACESSAR NMTUI CASO TIPO DE SEGURANÇA DA REDE SEJA DIFERENTE DE WPA2, COMO POR EXEMPLO PEAP
+# - GERAR AVISOS UTILIZANDO SISTEMA DE NOTIFICAÇÃO INFORMANDO SUCESSO OU FALHA NA CONEXÃO
+
 # Functions
 get_wifi_networks() {
     nmcli -t -f SSID,SIGNAL,BARS,SECURITY device wifi list
@@ -13,6 +19,13 @@ get_formatted_networks_list() {
 
 get_current_wifi_conn() {
     nmcli -t -f ACTIVE,SSID,SIGNAL device wifi list | awk -F: '$1=="yes" {print $2 " " $3}'
+}
+
+get_ssid_from_network_format() {
+    network=$1
+    raw_ssid="${network:0:$2}"
+    real_ssid="$(echo "$raw_ssid" | sed 's/ *$//')"
+    echo "$real_ssid"
 }
 
 set_status_msg() {
@@ -45,6 +58,7 @@ set_toggle_option() {
 
 # Variables Attribution
 layout="%-20s %-6s %-6s %-8s\n"
+ssid_width=20
 status="$(nmcli radio wifi)"
 current_network="$(get_current_wifi_conn)"
 nmcli_applet="$HOME/.config/rofi/themes/nmcliapplet.rasi"
@@ -84,6 +98,9 @@ case "$selected_option" in
             -theme "$menu_wifi_list" \
             -theme-str "$column_headers_config"
         )"
+
+        ssid="$(get_ssid_from_network_format "$selected_network" "$ssid_width")"
+        echo "selected ssid: $ssid"
         ;;
     
     " Refresh")
