@@ -2,8 +2,7 @@
 set -u
 
 # NOTA DO QUE FALTA FAZER:
-# - PEGAR SSID DA REDE SELECIONADA UTILIZANDO TAMANHO DO FORMAT
-# - GERAR CAIXA DE TEXTO PARA INSERIR A REDE E OPÇÃO DE ACESSAR NMTUI
+# - GERAR CAIXA DE TEXTO PARA INSERIR A SENHA E OPÇÃO DE ACESSAR NMTUI
 # - GERAR AVISO PARA ACESSAR NMTUI CASO TIPO DE SEGURANÇA DA REDE SEJA DIFERENTE DE WPA2, COMO POR EXEMPLO PEAP
 # - GERAR AVISOS UTILIZANDO SISTEMA DE NOTIFICAÇÃO INFORMANDO SUCESSO OU FALHA NA CONEXÃO
 
@@ -74,6 +73,7 @@ status="$(nmcli radio wifi)"
 current_network="$(get_current_wifi_conn)"
 nmcli_applet="$HOME/.config/rofi/themes/nmcliapplet.rasi"
 menu_wifi_list="$HOME/.config/rofi/themes/wifilist.rasi"
+menu_password="$HOME/.config/rofi/themes/passwordbox.rasi"
 headers=$(printf "$layout" "SSID" "SIGNAL" "BARS" "SECURITY")
 column_headers_config="textbox-column-headers { str: \"$headers\"; }"
 top_msg_config="$(set_status_msg "$current_network" "$status")"
@@ -111,10 +111,26 @@ case "$selected_option" in
         )"
 
         ssid="$(get_ssid_from_network_format "$selected_network" "$ssid_width")"
+        textbox_network_name_style="textbox-network-name { str: \"Wifi name: $ssid\"; }"
         sec_pos=$(($ssid_width + 1 + $signal_width + 1 + bars_width + 1))
         sec_type="$(get_security_from_network_format "$selected_network" "$sec_pos")"
         echo "selected ssid: $ssid"
         echo "security type: $sec_type"
+
+        if echo "$current_network" | grep -q "$ssid"; then
+            notify-send "Network " "Network already connected"
+
+        elif [[ "$sec_type" == *"WPA"* || "$sec_type" == *"WPE"* ]]; then
+            password=$(printf "confirm\ncancel" | rofi \
+                -dmenu \
+                -password \
+                -theme "$menu_password" \
+                -theme-str "$textbox_network_name_style"
+            )
+
+            printf "password: %s\n" "$password"
+        fi
+
         ;;
     
     " Refresh")
