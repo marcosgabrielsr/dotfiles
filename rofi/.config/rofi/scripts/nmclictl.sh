@@ -127,7 +127,11 @@ case "$selected_option" in
                 -theme-str "$textbox_network_name_style"
             )
 
-            
+            if nmcli -w 20 device wifi connect "$ssid" password "$password" > /dev/null 2>&1; then
+                notify-send "Network " "Connection established"
+            else
+                notify-send "Network " "Connection failure"
+            fi
         fi
 
         ;;
