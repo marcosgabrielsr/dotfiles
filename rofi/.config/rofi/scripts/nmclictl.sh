@@ -140,7 +140,7 @@ case "$selected_option" in
                 notify-send "Network " "Connection established"
             else
                 notify-send "Network " "Connection failure"
-                device_refresh
+                nmlci device wifi rescan
             fi
         fi
 
