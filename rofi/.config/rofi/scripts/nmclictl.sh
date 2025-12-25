@@ -62,6 +62,14 @@ set_toggle_option() {
     echo "$toggle_msg"
 }
 
+device_refresh() {
+    nmcli radio wifi off
+    sleep 1.5
+    nmcli radio wifi on
+    sleep 1.5
+    nmcli device wifi rescan
+}
+
 # Variables Attribution
 ssid_width=20
 signal_width=6
@@ -126,23 +134,20 @@ case "$selected_option" in
                 -theme "$menu_password" \
                 -theme-str "$textbox_network_name_style"
             )
-            [ -z "$selected_network" ] && exit 0
+            [ -z "$password" ] && exit 0
 
             if nmcli -w 20 device wifi connect "$ssid" password "$password" > /dev/null 2>&1; then
                 notify-send "Network " "Connection established"
             else
                 notify-send "Network " "Connection failure"
+                device_refresh
             fi
         fi
 
         ;;
     
     " Refresh")
-        nmcli radio wifi off
-        sleep 2
-        nmcli radio wifi on
-        sleep 2
-        nmcli device wifi rescan
+        device_refresh
         ;;
 
     " nmtui")
