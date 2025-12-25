@@ -109,17 +109,16 @@ case "$selected_option" in
             -theme "$menu_wifi_list" \
             -theme-str "$column_headers_config"
         )"
+        [ -z "$selected_network" ] && exit 0
 
         ssid="$(get_ssid_from_network_format "$selected_network" "$ssid_width")"
         textbox_network_name_style="textbox-network-name { str: \"Wifi name: $ssid\"; }"
         sec_pos=$(($ssid_width + 1 + $signal_width + 1 + bars_width + 1))
         sec_type="$(get_security_from_network_format "$selected_network" "$sec_pos")"
-        echo "selected ssid: $ssid"
-        echo "security type: $sec_type"
 
         if echo "$current_network" | grep -q "$ssid"; then
             notify-send "Network " "Network already connected"
-
+        
         elif [[ "$sec_type" == *"WPA"* || "$sec_type" == *"WPE"* ]]; then
             password=$(printf "confirm\ncancel" | rofi \
                 -dmenu \
@@ -128,7 +127,7 @@ case "$selected_option" in
                 -theme-str "$textbox_network_name_style"
             )
 
-            printf "password: %s\n" "$password"
+            
         fi
 
         ;;
