@@ -2,9 +2,7 @@
 set -u
 
 # NOTA DO QUE FALTA FAZER:
-# - GERAR CAIXA DE TEXTO PARA INSERIR A SENHA E OPÇÃO DE ACESSAR NMTUI
 # - GERAR AVISO PARA ACESSAR NMTUI CASO TIPO DE SEGURANÇA DA REDE SEJA DIFERENTE DE WPA2, COMO POR EXEMPLO PEAP
-# - GERAR AVISOS UTILIZANDO SISTEMA DE NOTIFICAÇÃO INFORMANDO SUCESSO OU FALHA NA CONEXÃO
 
 # Functions
 get_wifi_networks() {
@@ -70,6 +68,10 @@ device_refresh() {
     nmcli device wifi rescan
 }
 
+open_nmtui() {
+    kitty --detach -e nmtui
+}
+
 # Variables Attribution
 ssid_width=20
 signal_width=6
@@ -82,6 +84,7 @@ current_network="$(get_current_wifi_conn)"
 nmcli_applet="$HOME/.config/rofi/themes/nmcliapplet.rasi"
 menu_wifi_list="$HOME/.config/rofi/themes/wifilist.rasi"
 menu_password="$HOME/.config/rofi/themes/passwordbox.rasi"
+menu_confirm="$HOME/.config/rofi/themes/confirmbox.rasi"
 headers=$(printf "$layout" "SSID" "SIGNAL" "BARS" "SECURITY")
 column_headers_config="textbox-column-headers { str: \"$headers\"; }"
 top_msg_config="$(set_status_msg "$current_network" "$status")"
@@ -128,7 +131,7 @@ case "$selected_option" in
             notify-send "Network " "Network already connected"
         
         elif [[ "$sec_type" == *"WPA"* || "$sec_type" == *"WPE"* ]]; then
-            password=$(printf "confirm\ncancel" | rofi \
+            password=$(rofi \
                 -dmenu \
                 -password \
                 -theme "$menu_password" \
@@ -142,6 +145,20 @@ case "$selected_option" in
                 notify-send "Network " "Connection failure"
                 nmlci device wifi rescan
             fi
+        else
+            alert_msg="The security type is differnte from WPA/WPA2 and WPE. Would you like to access nmtui to configure the connection manually?"
+            alert_msg_style="textbox-alert-msg { str: \"$alert_msg\"; }"
+
+            selected_option=$(printf "yes\nno" | rofi \
+                -dmenu \
+                -theme "$menu_confirm" \
+                -theme-str "$alert_msg_style"
+            )
+            [ -z "$selected_option" ] && exit 0
+
+            if [ "$selected_option" = "yes" ]
+                open_nmtui
+            fi
         fi
 
         ;;
@@ -151,6 +168,6 @@ case "$selected_option" in
         ;;
 
     " nmtui")
-        kitty --detach -e nmtui
+        open_nmtui
         ;;
 esac

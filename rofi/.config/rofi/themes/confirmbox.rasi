@@ -1,0 +1,102 @@
+@import "base.rasi"
+
+window {
+    enabled: true;
+    transparency: "real";
+    location: center;
+    anchor: center;
+
+    width: 25%;
+    margin: 0px 10px 0px 0px;
+    padding: 10px;
+
+    cursor: "default";
+    border: 2px solid;
+    border-color: @border;
+    border-radius: 10px;
+    background-color: @background;
+}
+
+mainbox {
+    enabled: true;
+    spacing: 10px;
+    background-color: transparent;
+    orientation: vertical;
+    children: ["top-message","alert","listview"];
+}
+
+top-message {
+    enabled: true;
+    padding: 0px;
+    background-color: @background;
+    children: ["textbox-top-msg"];
+    expand: false;
+}
+
+textbox-top-msg {
+    expand: true;
+    background-color: transparent;
+    text-color: @foreground;
+    horizontal-align: 0.5;
+    vertical-align: 0.5;
+    str: " Alert";
+    font: "JetBrainsMono Nerd Font Propo 12";
+}
+
+alert {
+    enabled: true;
+    padding: 8px;
+    border: 2px solid;
+    border-color: @border;
+    border-radius: 10px;
+    background-color: @background-alt;
+    children: ["textbox-alert-msg"];
+    expand: false;
+}
+
+textbox-alert-msg {
+    expand: true;
+    background-color: transparent;
+    text-color: @foreground;
+    horizontal-align: 0.0;
+    vertical-align: 0.5;
+    str: "Waiting confirmation...";
+    font: "JetBrainsMono Nerd Font Propo 10";
+}
+
+listview {
+    enabled: true;
+    columns: 2;
+    lines: 1;
+    dynamic: true;
+    reverse: false;
+    spacing: 90px;
+    padding: 0px 15px 0px 15px;
+    background-color: transparent;
+    cursor: "default";
+    expand: false;
+}
+
+element {
+    enabled: true;
+    padding: 8px;
+    border-radius: 100%;
+    background-color: @background-alt;
+    text-color: @foreground;
+    orientation: horizontal;
+    children: ["element-text"];
+}
+
+element.selected {
+    background-color: @selected;
+    text-color: @background;
+}
+
+element-text {
+    background-color: transparent;
+    text-color: inherit;
+    cursor: inherit;
+    vertical-align: 0.5;
+    horizontal-align: 0.5;
+    font: "JetBrainsMono Nerd Font Propo 10";
+}
