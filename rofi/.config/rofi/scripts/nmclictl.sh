@@ -81,7 +81,7 @@ layout="%-${ssid_width}s %-${signal_width}s %-${bars_width}s %-${security_width}
 
 status="$(nmcli radio wifi)"
 current_network="$(get_current_wifi_conn)"
-nmcli_applet="$HOME/.config/rofi/themes/nmcliapplet.rasi"
+nmcli_applet="$HOME/.config/rofi/themes/connapplet.rasi"
 menu_wifi_list="$HOME/.config/rofi/themes/wifilist.rasi"
 menu_password="$HOME/.config/rofi/themes/passwordbox.rasi"
 menu_confirm="$HOME/.config/rofi/themes/confirmbox.rasi"
