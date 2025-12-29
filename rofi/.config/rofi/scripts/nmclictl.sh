@@ -1,9 +1,6 @@
 #!/bin/bash
 set -u
 
-# NOTA DO QUE FALTA FAZER:
-# - GERAR AVISO PARA ACESSAR NMTUI CASO TIPO DE SEGURANÇA DA REDE SEJA DIFERENTE DE WPA2, COMO POR EXEMPLO PEAP
-
 # Functions
 get_wifi_networks() {
     nmcli -t -f SSID,SIGNAL,BARS,SECURITY device wifi list
@@ -160,7 +157,6 @@ case "$selected_option" in
                 open_nmtui
             fi
         fi
-
         ;;
     
     " Refresh")
