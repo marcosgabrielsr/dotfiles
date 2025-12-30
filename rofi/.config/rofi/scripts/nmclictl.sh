@@ -151,9 +151,9 @@ case "$selected_option" in
                 -theme "$menu_confirm" \
                 -theme-str "$alert_msg_style"
             )
-            [ -z "$selected_option" ] && exit 0
+            [ -z "$selected_option" ] && exit 
 
-            if [ "$selected_option" = "yes" ]
+            if [ "$selected_option" = "yes" ]; then
                 open_nmtui
             fi
         fi
