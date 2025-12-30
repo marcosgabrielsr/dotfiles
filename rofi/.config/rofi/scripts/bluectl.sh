@@ -53,3 +53,25 @@ selected_option="$(printf "%s\n" "${options[@]}" | rofi \
     -theme-str "$top_msg_config"
 )"
 [ -z "$selected_option" ] && exit 0
+
+case "$selected_option" in
+    "⏻ Power on")
+        bluetoothctl power on > /dev/null 2>&1
+        ;;
+    
+    "⏻ Power off")
+        bluetoothctl power off > /dev/null 2>&1
+        ;;
+
+    " Scan devices")
+        echo -e " Scan devices"
+        ;;
+
+    "󰟴 Paired devices")
+        echo -e "󰟴 Paired devices"
+        ;;
+
+    " bluetoothctl")
+        echo -e " bluetoothctl"
+        ;;
+esac
