@@ -36,6 +36,10 @@ set_status_msg() {
     echo "$top_msg_config"
 }
 
+get_paired_devices() {
+    echo "$(bluetoothctl devices Paired | sed 's/Device //')"
+}
+
 power_status="$(get_power_status)"
 conn_device="$(get_conn_device)"
 blue_applet="$HOME/.config/rofi/themes/connapplet.rasi"
@@ -68,7 +72,9 @@ case "$selected_option" in
         ;;
 
     "󰟴 Paired devices")
-        echo -e "󰟴 Paired devices"
+        paired_devices="$(get_paired_devices)"
+
+        
         ;;
 
     " bluetoothctl")
