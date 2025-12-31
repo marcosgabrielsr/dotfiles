@@ -1,0 +1,22 @@
+# Function to set the status msg on the menu list
+# Receive the follow arguments:
+# - $1: connected device
+# - $2: working status
+# - $3: Connected Status msg
+# - $4: is working status
+set_status_msg() {
+    local msg=""
+    local top_msg_config=""
+    if [ -n "$1" ]; then
+        msg="Status:\n$3"
+        top_msg_config="textbox-status-msg { str: \"$msg\"; background-color: @success;}"
+    elif [ "$2" = "$4" ]; then
+        msg="Status:\nEnabled"
+        top_msg_config="textbox-status-msg { str: \"$msg\"; background-color: @urgent;}"
+    else
+        msg="Status:\nDisabled"
+        top_msg_config="textbox-status-msg { str: \"$msg\"; background-color: @urgent;}"
+    fi
+
+    echo "$top_msg_config"
+}
