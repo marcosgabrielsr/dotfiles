@@ -40,6 +40,27 @@ device_refresh() {
     nmcli device wifi rescan
 }
 
+connect_to_wifi() {
+    local ssid="$1"
+    local pass="$2"
+    
+    if nmcli connection show "$ssid" &> /dev/null; then
+        if nmcli connection up id "$ssid"; then
+            notify-send "Network " "Connection established (Saved Profile)"
+            return 0
+        else
+            nmcli connection delete id "$ssid" &> /dev/null
+        fi
+    fi
+
+    if nmcli -w 20 device wifi connect "$ssid" password "$pass"; then
+        notify-send "Network " "Connection established"
+    else
+        notify-send "Network " "Connection failure"
+        nmcli device wifi rescan
+    fi
+}
+
 open_nmtui() {
     kitty_exec_tui nmtui
 }
@@ -66,11 +87,10 @@ options=(
 selected_option="$(printf "%s\n" "${options[@]}" | rofi \
     -dmenu \
     -theme "$conn_applet_menu" \
-    -theme-str "$top_msg_config" \
+    -theme-str "$(set_top_msg_conn_applet " Wifi")" \
+    -theme-str "$status_msg_config" \
 )"
 [ -z "$selected_option" ] && exit 0
-
-echo "$selected_option"
 
 case "$selected_option" in
     "⏻ Power on")
@@ -86,11 +106,17 @@ case "$selected_option" in
         selected_network="$(echo "$networks" | rofi \
             -dmenu \
             -theme "$menu_list" \
+            -theme-str "$(set_top_msg_menulist '󱄙 Get NetWorks')" \
             -theme-str "$column_headers_config"
         )"
         [ -z "$selected_network" ] && exit 0
 
         ssid="$(get_ssid_from_network_format "$selected_network" "$ssid_width")"
+        if nmcli connection show "$ssid" &> /dev/null; then
+            connect_to_wifi "$ssid" ""
+            exit 0
+        fi
+
         textbox_network_name_style="textbox-network-name { str: \"Wifi name: $ssid\"; }"
         sec_pos=$(($ssid_width + 1 + $signal_width + 1 + bars_width + 1))
         sec_type="$(get_security_from_network_format "$selected_network" "$sec_pos")"
@@ -107,12 +133,7 @@ case "$selected_option" in
             )
             [ -z "$password" ] && exit 0
 
-            if nmcli -w 20 device wifi connect "$ssid" password "$password" > /dev/null 2>&1; then
-                notify-send "Network " "Connection established"
-            else
-                notify-send "Network " "Connection failure"
-                nmlci device wifi rescan
-            fi
+            connect_to_wifi "$ssid" "$password"
         else
             alert_msg="The security type is differnte from WPA/WPA2 and WPE. Would you like to access nmtui to configure the connection manually?"
             alert_msg_style="textbox-alert-msg { str: \"$alert_msg\"; }"
