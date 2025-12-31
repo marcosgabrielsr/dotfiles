@@ -1,3 +1,8 @@
+# === Variabels ===
+conn_applet_menu="$HOME/.config/rofi/themes/connapplet.rasi"
+menu_list="$HOME/.config/rofi/themes/menulist.rasi"
+
+# === Functions ===
 # Function to set the status msg on the menu list
 # Receive the follow arguments:
 # - $1: connected device
