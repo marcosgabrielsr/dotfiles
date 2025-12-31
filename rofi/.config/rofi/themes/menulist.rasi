@@ -39,7 +39,7 @@ textbox-top-msg {
     text-color: @foreground;
     horizontal-align: 0.5;
     vertical-align: 0.5;
-    str: " NetWorks";
+    str: "Top Message";
     font: "JetBrainsMono Nerd Font Propo 12";
 }
 
@@ -79,7 +79,7 @@ entry {
     background-color: inherit;
     text-color: inherit;
     cursor: text;
-    placeholder: "Search networks...";
+    placeholder: "Search...";
     placeholder-color: inherit;
     font: inherit;
 }

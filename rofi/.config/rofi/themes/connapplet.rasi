@@ -39,7 +39,7 @@ textbox-top-msg {
     text-color: @foreground;
     horizontal-align: 0.5;
     vertical-align: 0.5;
-    str: " Wifi";
+    str: "Loading...";
     font: "JetBrainsMono Nerd Font Propo 12";
 }
 
