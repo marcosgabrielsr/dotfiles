@@ -9,11 +9,18 @@ menu_confirm="$HOME/.config/rofi/themes/confirmbox.rasi"
 # Function to set the top-message on the conn-applet
 # Receive the follow arguments:
 # - $1: 'string' cotent for the textbox-top-msg
-set_top_msg() {
+set_top_msg_conn_applet() {
     echo "textbox-top-msg { str: \"$1\"; }"
 }
 
-# Function to set the status msg on the menu list
+# Function to set the top msg on the menu list
+# Receive the follow arguments:
+# - $1: 'string' cotent for the textbox-top-msg
+set_top_msg_menulist() {
+    echo "textbox-top-msg { str: \"$1\"; }"
+}
+
+# Function to set the status msg on the conn-applet
 # Receive the follow arguments:
 # - $1: connected device
 # - $2: working status
@@ -60,4 +67,11 @@ kitty_exec_tui() {
 # - $1: Name of the element that will be hide
 rofi_hide() {
     echo "$1 { enabled: false; }"
+}
+
+# Function to set the rofi window width
+# Receive the follow arguments:
+# - $1: new width value (in percentage or pixels)
+set_rofi_window_width() {
+    echo "window { width: $1; }"
 }
