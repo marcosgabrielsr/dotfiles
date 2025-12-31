@@ -41,7 +41,7 @@ device_refresh() {
 }
 
 open_nmtui() {
-    kitty --detach -e nmtui
+    kitty_exec_tui nmtui
 }
 
 # Variables Attribution

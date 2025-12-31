@@ -26,6 +26,10 @@ get_paired_devices() {
     echo "$(bluetoothctl devices Paired | sed 's/Device //')"
 }
 
+open_bluetoothctl() {
+    kitty_exec_tui bluetoothctl
+}
+
 power_status="$(get_power_status)"
 conn_device="$(get_conn_device)"
 blue_applet="$HOME/.config/rofi/themes/connapplet.rasi"
@@ -70,6 +74,6 @@ case "$selected_option" in
         ;;
 
     " bluetoothctl")
-        echo -e " bluetoothctl"
+        open_bluetoothctl
         ;;
 esac
