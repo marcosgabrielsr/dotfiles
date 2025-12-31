@@ -1,6 +1,9 @@
 #!/bin/bash
 set -u
 
+# Imporing dependencies
+source "$HOME/.config/rofi/scripts/conn-utils.sh"
+
 # Functions
 get_wifi_networks() {
     nmcli -t -f SSID,SIGNAL,BARS,SECURITY device wifi list
@@ -27,23 +30,6 @@ get_security_from_network_format() {
     local raw_sec="${network:$2}"
     local real_sec="$(echo "$raw_sec" | sed 's/ *$//')"
     echo "$real_sec"
-}
-
-set_status_msg() {
-    local msg=""
-    local top_msg_config=""
-    if [ -n "$1" ]; then
-        msg="Status:\n$1"
-        top_msg_config="textbox-status-msg { str: \"$msg\"; background-color: @success;}"
-    elif [ "$2" = "enabled"]; then
-        msg="Status:\nEnabled"
-        top_msg_config="textbox-status-msg { str: \"$msg\"; background-color: @urgent;}"
-    else
-        msg="Status:\nDisabled"
-        top_msg_config="textbox-status-msg { str: \"$msg\"; background-color: @urgent;}"
-    fi
-
-    echo "$top_msg_config"
 }
 
 set_toggle_option() {
@@ -84,7 +70,7 @@ menu_password="$HOME/.config/rofi/themes/passwordbox.rasi"
 menu_confirm="$HOME/.config/rofi/themes/confirmbox.rasi"
 headers=$(printf "$layout" "SSID" "SIGNAL" "BARS" "SECURITY")
 column_headers_config="textbox-column-headers { str: \"$headers\"; }"
-top_msg_config="$(set_status_msg "$current_network" "$status")"
+top_msg_config="$(set_status_msg "$current_network" "$status" "$current_network" "enabled")"
 options=(
     "$(set_toggle_option "$status")"
     "󱄙 Get NetWorks"

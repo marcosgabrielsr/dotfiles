@@ -1,6 +1,9 @@
 #!/bin/bash
 set -u
 
+# Imporing dependencies
+source "$HOME/.config/rofi/scripts/conn-utils.sh"
+
 get_power_status() {
     echo "$(bluetoothctl show | grep Powered | awk '{print $2}')"
 }
@@ -19,23 +22,6 @@ set_toggle_option() {
     fi
 }
 
-set_status_msg() {
-    local msg=""
-    local top_msg_config=""
-    if [ -n "$1" ]; then
-        msg="Status:\n$1"
-        top_msg_config="textbox-status-msg { str: \"$msg\"; background-color: @success;}"
-    elif [ "$2" = "yes" ]; then
-        msg="Status:\nEnabled"
-        top_msg_config="textbox-status-msg { str: \"$msg\"; background-color: @urgent;}"
-    else
-        msg="Status:\nDisabled"
-        top_msg_config="textbox-status-msg { str: \"$msg\"; background-color: @urgent;}"
-    fi
-
-    echo "$top_msg_config"
-}
-
 get_paired_devices() {
     echo "$(bluetoothctl devices Paired | sed 's/Device //')"
 }
@@ -43,7 +29,8 @@ get_paired_devices() {
 power_status="$(get_power_status)"
 conn_device="$(get_conn_device)"
 blue_applet="$HOME/.config/rofi/themes/connapplet.rasi"
-top_msg_config="$(set_status_msg "$conn_device" "$power_status")"
+device_menu_list="$HOME/.config/rofi/themes/menulist.rasi"
+top_msg_config="$(set_status_msg "$conn_device" "$power_status" "In working..." "yes")"
 options=(
     "$(set_toggle_option "$power_status")"
     " Scan devices"
@@ -74,7 +61,12 @@ case "$selected_option" in
     "󰟴 Paired devices")
         paired_devices="$(get_paired_devices)"
 
-        
+        paired_device="$(printf "$paired_devices" | rofi \
+            -dmenu \
+            -theme "$device_menu_list" \
+            -themes-str "$top_msg_config" \
+        )"
+        [ -z "$paired_device" ] && exit 0
         ;;
 
     " bluetoothctl")
