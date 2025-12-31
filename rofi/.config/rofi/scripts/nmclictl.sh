@@ -55,7 +55,7 @@ status="$(nmcli radio wifi)"
 current_network="$(get_current_wifi_conn)"
 headers=$(printf "$layout" "SSID" "SIGNAL" "BARS" "SECURITY")
 column_headers_config="textbox-column-headers { str: \"$headers\"; }"
-top_msg_config="$(set_status_msg "$current_network" "$status" "$current_network" "enabled")"
+status_msg_config="$(set_status_msg "$current_network" "$status" "$current_network" "enabled")"
 options=(
     "$(set_toggle_option "$status" "enabled")"
     "󱄙 Get NetWorks"

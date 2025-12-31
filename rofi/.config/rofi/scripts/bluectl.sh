@@ -33,7 +33,7 @@ open_bluetoothctl() {
 # Main code
 power_status="$(get_power_status)"
 conn_device="$(get_conn_device)"
-top_msg_config="$(set_status_msg "$conn_device" "$power_status" "In working..." "yes")"
+status_msg_config="$(set_status_msg "$conn_device" "$power_status" "In working..." "yes")"
 options=(
     "$(set_toggle_option "$power_status" "yes")"
     " Scan devices"

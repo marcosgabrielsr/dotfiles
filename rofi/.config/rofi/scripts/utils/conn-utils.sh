@@ -13,19 +13,19 @@ menu_confirm="$HOME/.config/rofi/themes/confirmbox.rasi"
 # - $4: is working status
 set_status_msg() {
     local msg=""
-    local top_msg_config=""
+    local status_msg_config=""
     if [ -n "$1" ]; then
         msg="Status:\n$3"
-        top_msg_config="textbox-status-msg { str: \"$msg\"; background-color: @success;}"
+        status_msg_config="textbox-status-msg { str: \"$msg\"; background-color: @success;}"
     elif [ "$2" = "$4" ]; then
         msg="Status:\nEnabled"
-        top_msg_config="textbox-status-msg { str: \"$msg\"; background-color: @urgent;}"
+        status_msg_config="textbox-status-msg { str: \"$msg\"; background-color: @urgent;}"
     else
         msg="Status:\nDisabled"
-        top_msg_config="textbox-status-msg { str: \"$msg\"; background-color: @urgent;}"
+        status_msg_config="textbox-status-msg { str: \"$msg\"; background-color: @urgent;}"
     fi
 
-    echo "$top_msg_config"
+    echo "$status_msg_config"
 }
 
 # Function to set the toggle option on connections controller menu
