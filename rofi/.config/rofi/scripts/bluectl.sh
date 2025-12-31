@@ -30,10 +30,9 @@ open_bluetoothctl() {
     kitty_exec_tui bluetoothctl
 }
 
+# Main code
 power_status="$(get_power_status)"
 conn_device="$(get_conn_device)"
-blue_applet="$HOME/.config/rofi/themes/connapplet.rasi"
-device_menu_list="$HOME/.config/rofi/themes/menulist.rasi"
 top_msg_config="$(set_status_msg "$conn_device" "$power_status" "In working..." "yes")"
 options=(
     "$(set_toggle_option "$power_status" "yes")"
@@ -44,7 +43,7 @@ options=(
 
 selected_option="$(printf "%s\n" "${options[@]}" | rofi \
     -dmenu \
-    -theme "$blue_applet" \
+    -theme "$conn_applet_menu" \
     -theme-str "$top_msg_config"
 )"
 [ -z "$selected_option" ] && exit 0
@@ -67,7 +66,7 @@ case "$selected_option" in
 
         paired_device="$(printf "$paired_devices" | rofi \
             -dmenu \
-            -theme "$device_menu_list" \
+            -theme "$menu_list" \
             -themes-str "$top_msg_config" \
         )"
         [ -z "$paired_device" ] && exit 0

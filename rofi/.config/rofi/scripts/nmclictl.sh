@@ -44,7 +44,7 @@ open_nmtui() {
     kitty_exec_tui nmtui
 }
 
-# Variables Attribution
+# Main code
 ssid_width=20
 signal_width=6
 bars_width=6
@@ -53,8 +53,6 @@ layout="%-${ssid_width}s %-${signal_width}s %-${bars_width}s %-${security_width}
 
 status="$(nmcli radio wifi)"
 current_network="$(get_current_wifi_conn)"
-nmcli_applet="$HOME/.config/rofi/themes/connapplet.rasi"
-menu_wifi_list="$HOME/.config/rofi/themes/menulist.rasi"
 menu_password="$HOME/.config/rofi/themes/passwordbox.rasi"
 menu_confirm="$HOME/.config/rofi/themes/confirmbox.rasi"
 headers=$(printf "$layout" "SSID" "SIGNAL" "BARS" "SECURITY")
@@ -69,7 +67,7 @@ options=(
 
 selected_option="$(printf "%s\n" "${options[@]}" | rofi \
     -dmenu \
-    -theme "$nmcli_applet" \
+    -theme "$conn_applet_menu" \
     -theme-str "$top_msg_config" \
 )"
 [ -z "$selected_option" ] && exit 0
@@ -89,7 +87,7 @@ case "$selected_option" in
         networks="$(get_formatted_networks_list "$layout")"
         selected_network="$(echo "$networks" | rofi \
             -dmenu \
-            -theme "$menu_wifi_list" \
+            -theme "$menu_list" \
             -theme-str "$column_headers_config"
         )"
         [ -z "$selected_network" ] && exit 0
