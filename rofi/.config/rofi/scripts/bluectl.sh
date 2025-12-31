@@ -12,22 +12,22 @@ get_conn_device() {
     echo "$(bluetoothctl devices Connected)"
 }
 
-set_toggle_option() { 
-    local powered="$1"
-    
-    if [ "$powered" = "yes" ]; then
-        echo "⏻ Power off"
-    else
-        echo "⏻ Power on"
-    fi
-}
-
 get_paired_devices() {
     echo "$(bluetoothctl devices Paired | sed 's/Device //')"
 }
 
 open_bluetoothctl() {
     kitty_exec_tui bluetoothctl
+}
+
+get_paired_devices_names() {
+    local mac_address_size=17
+    local dnames=""
+    while IFS= read -r line; do
+        dnames+="${line:((mac_address_size + 1))}\n"
+    done <<< "$(get_paired_devices)"
+
+    echo "$dnames"
 }
 
 # Main code
@@ -44,7 +44,8 @@ options=(
 selected_option="$(printf "%s\n" "${options[@]}" | rofi \
     -dmenu \
     -theme "$conn_applet_menu" \
-    -theme-str "$top_msg_config"
+    -theme-str "$(set_top_msg "󰂯 Bluetooth")" \
+    -theme-str "$status_msg_config"
 )"
 [ -z "$selected_option" ] && exit 0
 
@@ -62,12 +63,12 @@ case "$selected_option" in
         ;;
 
     "󰟴 Paired devices")
-        paired_devices="$(get_paired_devices)"
+        paired_devices="$(get_paired_devices_names)"
 
         paired_device="$(printf "$paired_devices" | rofi \
             -dmenu \
             -theme "$menu_list" \
-            -themes-str "$top_msg_config" \
+            -themes-str "$status_msg_config" \
         )"
         [ -z "$paired_device" ] && exit 0
         ;;
