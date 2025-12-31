@@ -2,7 +2,7 @@
 set -u
 
 # Imporing dependencies
-source "$HOME/.config/rofi/scripts/conn-utils.sh"
+source "$HOME/.config/rofi/scripts/utils/conn-utils.sh"
 
 # Functions
 get_wifi_networks() {
@@ -30,17 +30,6 @@ get_security_from_network_format() {
     local raw_sec="${network:$2}"
     local real_sec="$(echo "$raw_sec" | sed 's/ *$//')"
     echo "$real_sec"
-}
-
-set_toggle_option() {
-    local toggle_msg=""
-    if [ $1 = "enabled" ]; then
-        toggle_msg="Power off"
-    else
-        toggle_msg="Power on"
-    fi
-
-    echo "$toggle_msg"
 }
 
 device_refresh() {
@@ -72,7 +61,7 @@ headers=$(printf "$layout" "SSID" "SIGNAL" "BARS" "SECURITY")
 column_headers_config="textbox-column-headers { str: \"$headers\"; }"
 top_msg_config="$(set_status_msg "$current_network" "$status" "$current_network" "enabled")"
 options=(
-    "$(set_toggle_option "$status")"
+    "$(set_toggle_option "$status" "enabled")"
     "󱄙 Get NetWorks"
     " Refresh"
     " nmtui"
@@ -88,11 +77,11 @@ selected_option="$(printf "%s\n" "${options[@]}" | rofi \
 echo "$selected_option"
 
 case "$selected_option" in
-    "Power on")
+    "⏻ Power on")
         nmcli radio wifi on
         ;;
 
-    "Power off")
+    "⏻ Power off")
         nmcli radio wifi off
         ;;
 

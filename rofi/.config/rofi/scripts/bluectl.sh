@@ -2,7 +2,7 @@
 set -u
 
 # Imporing dependencies
-source "$HOME/.config/rofi/scripts/conn-utils.sh"
+source "$HOME/.config/rofi/scripts/utils/conn-utils.sh"
 
 get_power_status() {
     echo "$(bluetoothctl show | grep Powered | awk '{print $2}')"
@@ -32,7 +32,7 @@ blue_applet="$HOME/.config/rofi/themes/connapplet.rasi"
 device_menu_list="$HOME/.config/rofi/themes/menulist.rasi"
 top_msg_config="$(set_status_msg "$conn_device" "$power_status" "In working..." "yes")"
 options=(
-    "$(set_toggle_option "$power_status")"
+    "$(set_toggle_option "$power_status" "yes")"
     " Scan devices"
     "󰟴 Paired devices"
     " bluetoothctl"

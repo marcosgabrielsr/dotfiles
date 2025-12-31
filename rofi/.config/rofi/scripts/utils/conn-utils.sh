@@ -20,3 +20,15 @@ set_status_msg() {
 
     echo "$top_msg_config"
 }
+
+# Function to set the toggle option on connections controller menu
+# Receive the follow arguments:
+# - $1: Status of connection device (power on/ power off)
+# - $2: Messages that indicante if the deivce is working
+set_toggle_option() {
+    if [ "$1" = "$2" ]; then
+        echo "⏻ Power off"
+    else
+        echo "⏻ Power on"
+    fi
+}
