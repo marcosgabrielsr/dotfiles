@@ -32,3 +32,10 @@ set_toggle_option() {
         echo "⏻ Power on"
     fi
 }
+
+# Function to exec a tui/cli into a new kitty window
+# Receie the follow arguments:
+# - $1: Name of the command that will be executed
+kitty_exec_tui() {
+    kitty --detach -e "$1"
+}
