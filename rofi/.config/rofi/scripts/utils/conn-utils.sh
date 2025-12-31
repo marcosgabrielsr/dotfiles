@@ -1,10 +1,18 @@
 # === Variabels ===
+# Common Variables
 conn_applet_menu="$HOME/.config/rofi/themes/connapplet.rasi"
 menu_list="$HOME/.config/rofi/themes/menulist.rasi"
 menu_password="$HOME/.config/rofi/themes/passwordbox.rasi"
 menu_confirm="$HOME/.config/rofi/themes/confirmbox.rasi"
 
 # === Functions ===
+# Function to set the top-message on the conn-applet
+# Receive the follow arguments:
+# - $1: 'string' cotent for the textbox-top-msg
+set_top_msg() {
+    echo "textbox-top-msg { str: \"$1\"; }"
+}
+
 # Function to set the status msg on the menu list
 # Receive the follow arguments:
 # - $1: connected device
