@@ -1,6 +1,8 @@
 # === Variabels ===
 conn_applet_menu="$HOME/.config/rofi/themes/connapplet.rasi"
 menu_list="$HOME/.config/rofi/themes/menulist.rasi"
+menu_password="$HOME/.config/rofi/themes/passwordbox.rasi"
+menu_confirm="$HOME/.config/rofi/themes/confirmbox.rasi"
 
 # === Functions ===
 # Function to set the status msg on the menu list

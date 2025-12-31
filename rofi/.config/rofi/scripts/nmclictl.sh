@@ -53,8 +53,6 @@ layout="%-${ssid_width}s %-${signal_width}s %-${bars_width}s %-${security_width}
 
 status="$(nmcli radio wifi)"
 current_network="$(get_current_wifi_conn)"
-menu_password="$HOME/.config/rofi/themes/passwordbox.rasi"
-menu_confirm="$HOME/.config/rofi/themes/confirmbox.rasi"
 headers=$(printf "$layout" "SSID" "SIGNAL" "BARS" "SECURITY")
 column_headers_config="textbox-column-headers { str: \"$headers\"; }"
 top_msg_config="$(set_status_msg "$current_network" "$status" "$current_network" "enabled")"
