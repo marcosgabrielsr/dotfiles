@@ -54,3 +54,10 @@ set_toggle_option() {
 kitty_exec_tui() {
     kitty --detach -e "$1"
 }
+
+# Function to disable elements on rofi
+# Receive the follow arguments:
+# - $1: Name of the element that will be hide
+rofi_hide() {
+    echo "$1 { enabled: false; }"
+}
