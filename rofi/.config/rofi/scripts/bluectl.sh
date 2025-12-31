@@ -41,6 +41,24 @@ get_paired_devices_names() {
     echo "$dnames"
 }
 
+get_paired_mac_by_name() {
+    local dname="$1"
+    local info_device="$( get_paired_devices | grep "$dname")"
+    
+    if [ -z "$info_device" ]; then
+        printf "Dispositivo não encontrado."
+        return 1
+    fi
+    
+    local mac="$(echo "$info_device" | awk -F' ' '{printf $1}')"
+    echo "$mac"
+}
+
+connect_to_paired_device() {
+    mac="$1"
+    bluetoothctl connect "$mac" &> /dev/null
+}
+
 # Main code
 power_status="$(get_power_status)"
 conn_device="$(get_conn_device_name)"
@@ -84,6 +102,9 @@ case "$selected_option" in
             -theme-str "$(rofi_hide 'column-headers')" \
         )"
         [ -z "$paired_device" ] && exit 0
+        
+        device_mac="$(get_paired_mac_by_name "$paired_device")"
+        connect_to_paired_device "$device_mac"
         ;;
 
     " bluetoothctl")
