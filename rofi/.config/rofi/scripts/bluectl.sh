@@ -23,6 +23,10 @@ get_conn_device_name() {
     echo "$dname"
 }
 
+get_devices() {
+    echo "$(bluetoothctl devices | sed 's/Device //')"
+}
+
 get_paired_devices() {
     echo "$(bluetoothctl devices Paired | sed 's/Device //')"
 }
@@ -31,18 +35,20 @@ open_bluetoothctl() {
     kitty_exec_tui bluetoothctl
 }
 
-get_paired_devices_names() {
+get_devices_names() {
     local mac_address_size=17
+    local devices="$1"
     local dnames=""
     while IFS= read -r line; do
         dnames+="${line:((mac_address_size + 1))}\n"
-    done <<< "$(get_paired_devices)"
+    done <<< "$devices"
 
     echo "$dnames"
 }
 
-get_paired_mac_by_name() {
+get_mac_by_name() {
     local dname="$1"
+    local devices="$2"
     local info_device="$( get_paired_devices | grep "$dname")"
     
     if [ -z "$info_device" ]; then
@@ -138,11 +144,11 @@ case "$selected_option" in
         ;;
 
     " Scan devices")
-        echo -e " Scan devices"
+        devices="$(get_devices_names "$(get_devices)")"
         ;;
 
     "󰟴 Paired devices")
-        paired_devices="$(get_paired_devices_names)"
+        paired_devices="$(get_devices_names "$(get_paired_devices)")"
 
         paired_device="$(printf "$paired_devices" | rofi \
             -dmenu \
@@ -153,12 +159,12 @@ case "$selected_option" in
         )"
         [ -z "$paired_device" ] && exit 0
         
-        device_mac="$(get_paired_mac_by_name "$paired_device")"
+        device_mac="$(get_mac_by_name "$paired_device" "$(get_paired_devices)")"
         connect_to_paired_device "$device_mac"
         ;;
 
     "󰩹 Remove device")
-        paired_devices="$(get_paired_devices_names)"
+        paired_devices="$(get_devices_names "$(get_paired_devices)")"
 
         paired_device="$(printf "$paired_devices" | rofi \
             -dmenu \
@@ -169,7 +175,7 @@ case "$selected_option" in
         )"
         [ -z "$paired_device" ] && exit 0
 
-        device_mac="$(get_paired_mac_by_name "$paired_device")"
+        device_mac="$(get_mac_by_name "$paired_device" "$(get_paired_devices)")"
         remove_paired_device "$device_mac" "$paired_device"
         ;;
 
