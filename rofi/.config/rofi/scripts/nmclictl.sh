@@ -18,6 +18,10 @@ get_current_wifi_conn() {
     nmcli -t -f ACTIVE,SSID,SIGNAL device wifi list | awk -F: '$1=="yes" {print $2 " " $3}'
 }
 
+get_all_already_connected() {
+    echo "$(nmcli -t connection show | awk -F: '{print $1}' | grep -vx 'lo')"
+}
+
 get_ssid_from_network_format() {
     local network=$1
     local raw_ssid="${network:0:$2}"
@@ -33,10 +37,10 @@ get_security_from_network_format() {
 }
 
 device_refresh() {
-    nmcli radio wifi off
-    sleep 1.5
-    nmcli radio wifi on
-    sleep 1.5
+    # nmcli radio wifi off
+    # sleep 1
+    # nmcli radio wifi on
+    # sleep 1
     nmcli device wifi rescan
 }
 
@@ -61,6 +65,27 @@ connect_to_wifi() {
     fi
 }
 
+delete_conn() {
+    ssid="$1"
+    alert_msg="Are you sure to delete the $ssid connection?"
+    alert_msg_style="textbox-alert-msg { str: \"$alert_msg\"; }"
+
+    selected_option=$(printf "yes\nno" | rofi \
+        -dmenu \
+        -theme "$menu_confirm" \
+        -theme-str "$alert_msg_style"
+    )
+    [ -z "$selected_option" ] && exit 
+
+    if [ "$selected_option" = "yes" ]; then
+        if nmcli connection delete id "$ssid" &> /dev/null; then
+            notify-send "Network " "$ssid network was deleted"
+        else
+            notify-send "Network " "Error to delete $ssid network"
+        fi
+    fi
+}
+
 open_nmtui() {
     kitty_exec_tui nmtui
 }
@@ -81,6 +106,7 @@ options=(
     "$(set_toggle_option "$status" "enabled")"
     "󱄙 Get NetWorks"
     " Refresh"
+    "󰩹 Remove Network"
     " nmtui"
 )
 
@@ -153,6 +179,21 @@ case "$selected_option" in
     
     " Refresh")
         device_refresh
+        ;;
+
+    "󰩹 Remove Network")
+        already_conn="$(get_all_already_connected)"
+
+        selected_conn="$(printf "$already_conn" | rofi \
+            -dmenu \
+            -theme "$menu_list" \
+            -theme-str "$(set_top_msg_menulist '󰩹 Remove Network')" \
+            -theme-str "$(set_rofi_window_width '18%')" \
+            -theme-str "$(rofi_hide 'column-headers')" \
+        )"
+        [ -z "$selected_conn" ] && exit 0
+        
+        delete_conn "$selected_conn"
         ;;
 
     " nmtui")
