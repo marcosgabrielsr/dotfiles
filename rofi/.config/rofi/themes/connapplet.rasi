@@ -65,9 +65,10 @@ textbox-status-msg {
 listview {
     enabled: true;
     columns: 1;
-    lines: 4;
-    dynamic: false;
+    lines: 6;
+    dynamic: true;
     reverse: false;
+    fixed-height: false;
     spacing: 5px;
     background-color: transparent;
     cursor: "default";
