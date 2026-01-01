@@ -55,13 +55,40 @@ get_paired_mac_by_name() {
 }
 
 connect_to_paired_device() {
-    mac="$1"
+    local mac="$1"
+    local timeout_duration="10s"
+    local dname=$(bluetoothctl info "$mac" | grep "Alias" | cut -d ' ' -f 2-)
+    [[ -z "$dname" ]] && device_name="$mac"
+
+    # Executa o comando com timeout e captura a saída (stdout e stderr)
+    local output
+    output=$(timeout "$timeout_duration" bluetoothctl connect "$mac" 2>&1)
+    local exit_code=$?
+
+    # Lógica de verificação
+    if [[ $exit_code -eq 0 ]]; then
+        # Sucesso (Código 0)
+        notify-send -u normal -i bluetooth-active "Bluetooth Conectado" "Dispositivo: $device_name"
+    
+    elif [[ $exit_code -eq 124 ]]; then
+        # Código 124 é específico do comando 'timeout'
+        notify-send -u critical -i bluetooth-disabled "Bluetooth Timeout" "Falha ao conectar em $timeout_duration.\nDispositivo: $device_name"
+        # Opcional: tentar cancelar a tentativa pendente
+        bluetoothctl disconnect "$mac" &> /dev/null 
+    
+    else
+        # Qualquer outro erro (falha do bluetoothctl)
+        # Limita a mensagem de erro para não ficar gigante na notificação
+        local short_error=$(echo "$output" | head -n 1) 
+        notify-send -u critical -i dialog-error "Bluetooth Falhou" "Erro: $short_error"
+    fi
+
     bluetoothctl connect "$mac" &> /dev/null
 }
 
 remove_paired_device() {
-    mac="$1"
-    dname="$2"
+    local mac="$1"
+    local dname="$2"
     alert_msg="Are you sure to delete the $dname device?"
     alert_msg_style="textbox-alert-msg { str: \"$alert_msg\"; }"
 
