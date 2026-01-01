@@ -59,6 +59,28 @@ connect_to_paired_device() {
     bluetoothctl connect "$mac" &> /dev/null
 }
 
+remove_paired_device() {
+    mac="$1"
+    dname="$2"
+    alert_msg="Are you sure to delete the $dname device?"
+    alert_msg_style="textbox-alert-msg { str: \"$alert_msg\"; }"
+
+    selected_option=$(printf "yes\nno" | rofi \
+        -dmenu \
+        -theme "$menu_confirm" \
+        -theme-str "$alert_msg_style"
+    )
+    [ -z "$selected_option" ] && exit 
+
+    if [ "$selected_option" = "yes" ]; then
+        if bluetoothctl remove "$mac" &> /dev/null; then
+            notify-send "󰂯 Bluetooth" "$dname device was removed"
+        else
+            notify-send "󰂯 Bluetooth" "Error to remove $dname device"
+        fi
+    fi
+}
+
 # Main code
 power_status="$(get_power_status)"
 conn_device="$(get_conn_device_name)"
@@ -67,6 +89,7 @@ options=(
     "$(set_toggle_option "$power_status" "yes")"
     " Scan devices"
     "󰟴 Paired devices"
+    "󰩹 Remove device"
     " bluetoothctl"
 )
 
@@ -105,6 +128,22 @@ case "$selected_option" in
         
         device_mac="$(get_paired_mac_by_name "$paired_device")"
         connect_to_paired_device "$device_mac"
+        ;;
+
+    "󰩹 Remove device")
+        paired_devices="$(get_paired_devices_names)"
+
+        paired_device="$(printf "$paired_devices" | rofi \
+            -dmenu \
+            -theme "$menu_list" \
+            -theme-str "$(set_top_msg_menulist '󰟴 Paired devices')" \
+            -theme-str "$(set_rofi_window_width '18%')" \
+            -theme-str "$(rofi_hide 'column-headers')" \
+        )"
+        [ -z "$paired_device" ] && exit 0
+
+        device_mac="$(get_paired_mac_by_name "$paired_device")"
+        remove_paired_device "$device_mac" "$paired_device"
         ;;
 
     " bluetoothctl")
