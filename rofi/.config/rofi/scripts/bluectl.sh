@@ -49,7 +49,7 @@ get_devices_names() {
 get_mac_by_name() {
     local dname="$1"
     local devices="$2"
-    local info_device="$( get_paired_devices | grep "$dname")"
+    local info_device="$( echo "$devices" | grep "$dname")"
     
     if [ -z "$info_device" ]; then
         printf "Dispositivo não encontrado."
@@ -58,6 +58,32 @@ get_mac_by_name() {
     
     local mac="$(echo "$info_device" | awk -F' ' '{printf $1}')"
     echo "$mac"
+}
+
+scan_devices() {
+    bluetoothctl --timeout $1 scan on && printf "Rapaz, acabou!\n" && printf "devices:\n$(bluetoothctl devices)\n" &
+}
+
+connect_to() {
+    local mac="$1"
+    local device_name="$2"
+    local exit_code
+    local timeout_duration="10s"
+    bluetoothctl pair "$mac"
+    bluetoothctl trust "$mac"
+    bluetoothctl connect "$mac"
+    exit_code=$?
+
+    if [[ $exit_code -eq 0 ]]; then
+        notify-send -u normal -i bluetooth-active "Bluetooth Conectado" "Dispositivo: $device_name"
+    
+    elif [[ $exit_code -eq 124 ]]; then
+        notify-send -u critical -i bluetooth-disabled "Bluetooth Timeout" "Falha ao conectar em $timeout_duration.\nDispositivo: $device_name"
+        bluetoothctl disconnect "$mac" &> /dev/null 
+    else
+        local short_error=$(echo "$output" | head -n 1) 
+        notify-send -u critical -i dialog-error "Bluetooth Falhou" "Erro: $short_error"
+    fi
 }
 
 connect_to_paired_device() {
@@ -71,20 +97,13 @@ connect_to_paired_device() {
     output=$(timeout "$timeout_duration" bluetoothctl connect "$mac" 2>&1)
     local exit_code=$?
 
-    # Lógica de verificação
     if [[ $exit_code -eq 0 ]]; then
-        # Sucesso (Código 0)
         notify-send -u normal -i bluetooth-active "Bluetooth Conectado" "Dispositivo: $device_name"
     
     elif [[ $exit_code -eq 124 ]]; then
-        # Código 124 é específico do comando 'timeout'
         notify-send -u critical -i bluetooth-disabled "Bluetooth Timeout" "Falha ao conectar em $timeout_duration.\nDispositivo: $device_name"
-        # Opcional: tentar cancelar a tentativa pendente
         bluetoothctl disconnect "$mac" &> /dev/null 
-    
     else
-        # Qualquer outro erro (falha do bluetoothctl)
-        # Limita a mensagem de erro para não ficar gigante na notificação
         local short_error=$(echo "$output" | head -n 1) 
         notify-send -u critical -i dialog-error "Bluetooth Falhou" "Erro: $short_error"
     fi
@@ -144,7 +163,36 @@ case "$selected_option" in
         ;;
 
     " Scan devices")
-        devices="$(get_devices_names "$(get_devices)")"
+        while true; do
+            devices="$(get_devices_names "$(get_devices)")"
+            devices+=" Scan\n󰑓 Update List"
+
+            selected_option="$(printf "$devices" | rofi \
+                -dmenu \
+                -theme "$menu_list" \
+                -theme-str "$(set_top_msg_menulist '󰟴 Available devices')" \
+                -theme-str "$(set_rofi_window_width '18%')" \
+                -theme-str "$(rofi_hide 'column-headers')"
+            )"
+            [ -z "$selected_option" ] && exit 0
+
+            if [ "$selected_option" != " Scan" ] && [ "$selected_option" != "󰑓 Update List" ]; then
+                break
+            elif [ "$selected_option" = " Scan" ]; then
+                scan_devices 5
+            fi
+        done
+
+        paired_devices="$(get_devices_names "$(get_paired_devices)")"
+        printf "selected option: $selected_option\n"
+        if echo "$paired_devices" | grep -q "$selected_option"; then
+            mac="$(get_mac_by_name "$selected_option" "$paired_devices")"
+            connect_to_paired_device "$device_mac"
+        else
+            printf "devices:\n$(get_devices)\n"
+            mac="$(get_mac_by_name "$selected_option" "$(get_devices)")"
+            connect_to "$mac" "$selected_option"
+        fi
         ;;
 
     "󰟴 Paired devices")
