@@ -15,6 +15,7 @@ The settings shown here are used in a Wayland environment and prioritize lightwe
 - WM: Hyprland
 - Compositor: Wayland
 - Shell: Bash
+- Terminal: Kitty
 - Menu: Rofi
 - Status Bar: Waybar
 ---
