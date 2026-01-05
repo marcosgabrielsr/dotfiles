@@ -1,0 +1,23 @@
+/* =====================================================
+ * Dark Purple – Minimal & Clean Waybar Palette
+ * ===================================================== */
+
+/* Base */
+@define-color background  #1a1625; /* roxo quase preto */
+@define-color foreground  #e6e1f0; /* lavanda claro */
+
+/* Texto e ícones padrão */
+@define-color color7      #c8c2dd; /* lavanda acinzentado */
+
+/* Accent / Active / Hover */
+@define-color color9      #9d7cff; /* roxo vibrante controlado */
+
+/* Cores auxiliares */
+@define-color color0      #120f1a;
+@define-color color1      #ff6b6b; /* erro */
+@define-color color2      #7ee081; /* sucesso */
+@define-color color3      #ffd166; /* aviso */
+@define-color color4      #7aa2f7; /* azul frio */
+@define-color color5      #bb9af7; /* roxo suave */
+@define-color color6      #89ddff; /* ciano */
+@define-color color8      #6b668a; /* cinza arroxeado */

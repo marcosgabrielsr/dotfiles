@@ -1,0 +1,23 @@
+/* =====================================================
+ * Nordic Blue – Minimal Dark Palette for Waybar
+ * ===================================================== */
+
+/* Base */
+@define-color background  #1b212b; /* azul acinzentado escuro */
+@define-color foreground  #cfd8e3; /* cinza frio claro */
+
+/* Texto e ícones padrão */
+@define-color color7      #aab6c4; /* cinza azulado neutro */
+
+/* Accent / Active / Hover */
+@define-color color9      #5e81ac; /* azul nórdico (Nord-like) */
+
+/* Cores auxiliares (caso queira expandir depois) */
+@define-color color0      #161b22; /* fundo mais profundo */
+@define-color color1      #bf616a; /* erro */
+@define-color color2      #a3be8c; /* sucesso */
+@define-color color3      #ebcb8b; /* aviso */
+@define-color color4      #81a1c1; /* azul claro */
+@define-color color5      #b48ead; /* roxo frio */
+@define-color color6      #88c0d0; /* ciano suave */
+@define-color color8      #4c566a; /* cinza escuro */

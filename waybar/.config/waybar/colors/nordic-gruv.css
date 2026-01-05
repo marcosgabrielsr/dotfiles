@@ -1,0 +1,25 @@
+/* =====================================================
+ * Nordic Gray × Gruvbox – Hybrid Dark Palette
+ * ===================================================== */
+
+/* Base (Nordic Gray) */
+@define-color background  #1e222a; /* cinza escuro frio */
+@define-color foreground  #d8dee9; /* cinza claro frio */
+
+/* Texto e ícones padrão */
+@define-color color7      #aab1bf; /* cinza médio azulado */
+
+/* Accent / Active / Hover */
+@define-color color9      #d79921; /* amarelo gruvbox suave */
+
+/* Cores semânticas (Gruvbox-inspired) */
+@define-color color1      #cc6666; /* vermelho erro */
+@define-color color2      #98c379; /* verde sucesso */
+@define-color color3      #e5c07b; /* amarelo aviso */
+@define-color color4      #7aa2f7; /* azul frio */
+@define-color color5      #b48ead; /* roxo frio */
+@define-color color6      #56b6c2; /* ciano */
+
+/* Cinzas auxiliares */
+@define-color color0      #16191f; /* fundo mais profundo */
+@define-color color8      #4c566a; /* cinza escuro */

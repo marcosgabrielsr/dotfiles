@@ -1,0 +1,23 @@
+/* =====================================================
+ * Gruvbox Dark – Minimal Waybar Palette
+ * ===================================================== */
+
+/* Base */
+@define-color background  #282828; /* fundo gruvbox clássico */
+@define-color foreground  #ebdbb2; /* bege claro */
+
+/* Texto e ícones padrão */
+@define-color color7      #d5c4a1; /* bege acinzentado */
+
+/* Accent / Active / Hover */
+@define-color color9      #fe8019; /* laranja gruvbox */
+
+/* Cores auxiliares */
+@define-color color0      #1d2021;
+@define-color color1      #fb4934; /* erro */
+@define-color color2      #b8bb26; /* sucesso */
+@define-color color3      #fabd2f; /* aviso */
+@define-color color4      #83a598; /* azul frio */
+@define-color color5      #d3869b; /* roxo quente */
+@define-color color6      #8ec07c; /* aqua */
+@define-color color8      #928374; /* cinza */
