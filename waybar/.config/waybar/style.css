@@ -46,6 +46,7 @@ tooltip {
 #battery:hover,
 #cpu:hover,
 #memory:hover,
+#power-profiles-daemon:hover,
 #temperature:hover,
 #pulseaudio:hover,
 #pulseaudio.mic:hover{
@@ -156,16 +157,19 @@ tooltip {
     animation-iteration-count: infinite;
     animation-direction: alternate;
 }
+
 #group-expand{
     padding: 0px 5px;
     transition: all .3s ease; 
 }
+
 #custom-expand{
     padding: 0px 5px;
     color:alpha(@foreground,.2);
     text-shadow: 0px 0px 2px rgba(0, 0, 0, .7);
     transition: all .3s ease; 
 }
+
 #custom-expand:hover{
     color:rgba(255,255,255,.2);
     text-shadow: 0px 0px 2px rgba(255, 255, 255, .5);
@@ -173,7 +177,7 @@ tooltip {
 #custom-colorpicker{
     padding: 0px 5px;
 }
-#cpu,#memory,#temperature{
+#cpu,#memory,#power-profiles-daemon{
     padding: 0px 5px;
     transition: all .3s ease; 
     color:@color7;

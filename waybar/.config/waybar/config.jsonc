@@ -103,7 +103,7 @@
             "format": "|",
             "tooltip": false
         },
-        
+
         "group/expand": {
             "orientation": "horizontal",
             "drawer": {
@@ -111,7 +111,7 @@
                 "transition-to-left": true,
                 "click-to-reveal": true
             },
-            "modules": ["custom/expand", "custom/colorpicker","cpu","memory","temperature","custom/endpoint"]
+            "modules": ["custom/expand","custom/colorpicker","cpu","memory","power-profiles-daemon","custom/endpoint"]
         },
 
         "custom/colorpicker": {
@@ -130,6 +130,17 @@
 
         "memory": {
             "format": ""
+        },
+
+        "power-profiles-daemon": {
+            "format": "{icon}",
+            "tooltip-format": "Power profile:\t{profile}\nDriver:\t{driver}",
+            "format-icons": {
+                "default": "󰯉",
+                "performance": "󱓞",
+                "balanced": "󰑣",
+                "power-saver": ""
+            }
         },
 
         "tray": {
