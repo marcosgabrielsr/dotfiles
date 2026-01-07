@@ -41,17 +41,25 @@
             "format": "{icon}",
             "format-bluetooth": "{icon}",
             "format-muted": "",
+            "tooltip-format": "{volume}%",
             "format-icons": {
+                "headphone": "",
+                "headset": "",
+                "hands-free": "",
                 "default": ["","",""]
             },
             "scroll-step": 1,
             "on-click": "pavucontrol"
         },
+
         "pulseaudio#mic": {
             "format": "{format_source}",
             "format-source": "",
-            "format-source-muted": ""
+            "format-source-muted": "",
+            "on-click": "pavucontrol",
+            "tooltip": false
         },
+
         "network": {
             "format-wifi": "",
             "format-ethernet":"",
@@ -61,6 +69,7 @@
             "tooltip-format-ethernet": "{ifname} 🖧 ",
             "on-click": "kitty nmtui"
         },
+
         "bluetooth": {
             "format-on": "󰂯",
             "format-off": "󰂲",
@@ -72,7 +81,8 @@
             "tooltip-format-enumerate-connected": "{device_alias}\n{device_address}",
             "tooltip-format-enumerate-connected-battery": "{device_alias}\n{device_address}\n{device_battery_percentage}%",
             "on-click-right": "blueman-manager"
-        }, 
+        },
+
         "battery": {
             "interval":30,
             "states": {
@@ -86,6 +96,7 @@
             "format-alt": "{time} {icon}",
             "format-icons": ["󰁻","󰁼","󰁾","󰂀","󰂂","󰁹"]
         },
+
         "custom/pacman": {
             "format": "󰅢 {}",
             "interval": 30,   
@@ -95,10 +106,12 @@
             "signal": 8,
             "tooltip": false
         },
+
         "custom/expand": {
             "format": "",
             "tooltip": false
         },
+
         "custom/endpoint":{
             "format": "|",
             "tooltip": false
@@ -112,15 +125,6 @@
                 "click-to-reveal": true
             },
             "modules": ["custom/expand","custom/colorpicker","cpu","memory","power-profiles-daemon","custom/endpoint"]
-        },
-
-        "custom/colorpicker": {
-            "format": "{}",
-            "return-type": "json",
-            "interval": "once",
-            "exec": "~/.config/waybar/scripts/colorpicker.sh -j",
-            "on-click": "~/.config/waybar/scripts/colorpicker.sh",
-            "signal": 1
         },
 
         "cpu": {
