@@ -137,11 +137,12 @@ tooltip {
 
 #battery{
     padding: 0px 5px;
+    border-radius: 10px;
     transition: all .3s ease;
-    color:@color7;
+    color: #fff;
 }
 
-#battery.charging {
+#battery.charging, #battery.plugged {
     color: #26A65B;
 }
 
@@ -157,6 +158,18 @@ tooltip {
     animation-iteration-count: infinite;
     animation-direction: alternate;
 }
+
+/* Define o preenchimento para cada estado definido no config */
+#battery.10 { background-image: linear-gradient(to right, @color7 10%, #444 10%); color: #000; }
+#battery.20 { background-image: linear-gradient(to right, @color7 20%, #444 20%); color: #000; }
+#battery.30 { background-image: linear-gradient(to right, @color7 30%, #444 30%); color: #000; }
+#battery.40 { background-image: linear-gradient(to right, @color7 40%, #444 40%); color: #fff; }
+#battery.50 { background-image: linear-gradient(to right, @color7 50%, #444 50%); color: #fff; }
+#battery.60 { background-image: linear-gradient(to right, @color7 60%, #444 60%); color: #fff; }
+#battery.70 { background-image: linear-gradient(to right, @color7 70%, #444 70%); color: #fff; }
+#battery.80 { background-image: linear-gradient(to right, @color7 80%, #444 80%); color: #fff; }
+#battery.90 { background-image: linear-gradient(to right, @color7 90%, #444 90%); color: #fff; }
+#battery.100 { background-image: linear-gradient(to right, @color7 100%, #444 100%); color: #fff; }
 
 #group-expand{
     padding: 0px 5px;
