@@ -24,8 +24,10 @@ The settings shown here are used in a Wayland environment and prioritize lightwe
 
 ```text
 dotfiles/
+|- bash/                    # Bash shell settings
+|- hypr/                    # Hyprland configuration filles
 |- rofi /                   # Applets and scripts to quick menus
 |- waybar /                 # Status bar for Wayland
-|- bash/                    # Bash shell settings
+|- kitty/                   # Kitty Terminal settings
 |- install.sh               # Installation script (to future)
 ```
