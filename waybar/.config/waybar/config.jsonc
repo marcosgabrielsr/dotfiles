@@ -147,9 +147,9 @@
             "tooltip-format": "Power profile:\t{profile}\nDriver:\t{driver}",
             "format-icons": {
                 "default": "󰯉",
-                "performance": "󱓞",
-                "balanced": "󰑣",
-                "power-saver": ""
+                "performance": "󰓅",
+                "balanced": "󰾅",
+                "power-saver": "󰾆"
             }
         },
 
