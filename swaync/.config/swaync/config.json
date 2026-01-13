@@ -1,38 +1,37 @@
 {
   "$schema": "/etc/xdg/swaync/configSchema.json",
+  "ignore-gtk-theme": true,
   "positionX": "right",
   "positionY": "top",
-	"cssPriority": "user",
-
-  "control-center-width": 380,
-  "control-center-height": 860, 
-  "control-center-margin-top": 2,
-  "control-center-margin-bottom": 2,
-  "control-center-margin-right": 1,
+  "layer": "overlay",
+  "control-center-layer": "top",
+  "layer-shell": true,
+  "layer-shell-cover-screen": false,
+  "cssPriority": "highest",
+  "control-center-margin-top": 0,
+  "control-center-margin-bottom": 0,
+  "control-center-margin-right": 5,
   "control-center-margin-left": 0,
-
-  "notification-window-width": 400,
-  "notification-icon-size": 48,
-  "notification-body-image-height": 160,
+  "notification-2fa-action": true,
+  "notification-inline-replies": false,
+  "notification-body-image-height": 100,
   "notification-body-image-width": 200,
-
-  "timeout": 4,
-  "timeout-low": 2,
-  "timeout-critical": 6,
-  
-  "fit-to-screen": false,
+  "timeout": 9,
+  "timeout-low": 6,
+  "timeout-critical": 0,
+  "fit-to-screen": true,
+  "relative-timestamps": true,
+  "control-center-width": 500,
+  "control-center-height": 600,
+  "notification-window-width": 500,
   "keyboard-shortcuts": true,
+  "notification-grouping": true,
   "image-visibility": "when-available",
   "transition-time": 200,
   "hide-on-clear": false,
-  "hide-on-action": false,
+  "hide-on-action": true,
+  "text-empty": "No Notifications",
   "script-fail-notify": true,
-  "scripts": {
-    "example-script": {
-      "exec": "echo 'Do something...'",
-      "urgency": "Normal"
-    }
-  },
   "notification-visibility": {
     "example-name": {
       "state": "muted",
@@ -41,57 +40,93 @@
     }
   },
   "widgets": [
-    "label",
+    "title",
     "buttons-grid",
     "mpris",
-    "title",
+    "volume",
+    "backlight",
     "dnd",
     "notifications"
   ],
   "widget-config": {
+    "notifications": {
+      "vexpand": true
+    },
     "title": {
       "text": "Notifications",
       "clear-all-button": true,
-      "button-text": " 󰎟 "
+      "button-text": "Clear All"
     },
     "dnd": {
-      "text": "Do not disturb"
-    },
-    "label": {
-      "max-lines": 1,
-      "text": " "
+      "text": "Do Not Disturb"
     },
     "mpris": {
-      "image-size": 96,
-      "image-radius": 12
+      "autohide": true,
+      "show-album-art": "always",
+      "loop-carousel": true
+    },
+    "backlight": {
+      "device": "amdgpu_bl1",
+      "label": "",
+      "slider": true,
+      "min": 10
     },
     "volume": {
-      "label": "󰕾",
-        "show-per-app": true
+      "device": "default",
+      "label": "",
+      "slider": true
     },
     "buttons-grid": {
+      "buttons-per-row": 4,
       "actions": [
         {
-          "label": " ",
-          "command": "amixer set Master toggle"
-        },
-        {
-          "label": "",
-          "command": "amixer set Capture toggle"
-        },
-        {
-          "label": " ",
-          "command": "nm-connection-editor"
-        },
-        {
           "label": "󰂯",
-          "command": "blueman-manager"
+          "type": "button",
+          "active": true,
+          "command": "swaync-client -t -sw;sh -c 'adw-bluetooth'"
         },
         {
-          "label": "󰏘",
-          "command": "nwg-look"
+          "label": "⏻",
+          "type": "button",
+          "active": true,
+          "command": "notify-send 'Power'"
+        },
+        {
+          "label": "󰆏",
+          "type": "button",
+          "active": true,
+          "command": "notify-send 'Cliphist Option'"
+        },
+        {
+          "label": "󰊪",
+          "type": "toggle",
+          "active": false,
+          "command": "notify-send 'Blue Light Filter Option'"
+        },
+        {
+          "label": "",
+          "type": "button",
+          "active": true,
+          "command": "notify-send 'Internet Option'"
+        },
+        {
+          "label": "",
+          "type": "button",
+          "active": true,
+          "command": "notify-send 'Print Screen Option'"
+        },
+        {
+          "label": "",
+          "type": "button",
+          "active": true,
+          "command": "notify-send 'Application Launcher'"
+        },
+        {
+          "label": "",
+          "type": "button",
+          "active": true,
+          "command": "notify-send 'Extra Option'"
         }
-        
       ]
     }
   }
